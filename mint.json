@@ -74,6 +74,14 @@
         "api-reference/introduction"
       ]
     },
+     {
+      "group": "iOS SDK",
+      "pages": [
+        "api-reference/endpoint/get",
+        "api-reference/endpoint/create",
+        "api-reference/endpoint/delete"
+      ]
+    },
     {
       "group": "Android SDK",
       "pages": [
