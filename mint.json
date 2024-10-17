@@ -79,6 +79,7 @@
       "pages": [
         "api-reference/endpoint/get",
         "api-reference/endpoint/create",
+        "api-reference/android_sdk",
         "api-reference/endpoint/delete"
       ]
     }
