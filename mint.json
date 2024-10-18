@@ -71,7 +71,10 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/introduction"
+        "api-reference/Getting Started",
+        "api-reference/Create your first convsation",
+        "api-reference/Get your API Keys",
+        "api-reference/Get Token"
       ]
     },
      {
