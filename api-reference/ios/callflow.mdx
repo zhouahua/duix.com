@@ -1,0 +1,14 @@
+---
+title: '调用流程'
+description: ''
+---
+
+```
+1.添加GJDigitalSDK.framework、WebRTC.framework加到工程文件；
+2.授权麦克风权限权限；
+3.启动DUIX服务前需要准备好授权的appId,appKey,conversationId；
+4.init初始化数字人渲染，ASR及对话交互服务,开始初始化通讯；
+5.调用toStart函数开始渲染数字人；
+6.根据自身需求是否调用文本驱动、音频驱动、文本问答，打断；
+7. 调用toStop结束并释放数字人渲染。
+```

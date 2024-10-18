@@ -1,0 +1,191 @@
+---
+title: '关键接口'
+description: ''
+---
+
+```
+/**
+ * SDK初始化
+ *
+ * - Parameters:
+ *   - appId: appId
+ *   - appKey: appkey
+ *   - conversationId: 会话Id
+ *   - block: 回调
+ */
+- (void)initWithAppId:(NSString *)appId appKey:(NSString *)appKey conversationId:(NSString *)conversationId block:(void (^)(BOOL isSuccee, NSString *errorMsg))block;
+
+/**
+ * 开始通讯
+ */
+- (void)toStart;
+
+/**
+ * 结束通讯
+ */
+- (void)toStop;
+
+/**
+ * 文本驱动数字人
+ *
+ * - Parameters:
+ *   - text: 文本内容
+ *   - interrupt: 是否打断前面的话
+ */
+- (void)commandEventWithText:(NSString *)text interrupt:(BOOL)interrupt;
+
+/**
+ * 音频驱动数字人
+ *
+ * - Parameters:
+ *   - audioUrl: 音频地址
+ *   - interrupt: 是否打断前面的话
+ */
+- (void)commandEventWithAudioUrl:(NSString *)audioUrl interrupt:(BOOL)interrupt;
+
+/**
+ * 文本问答
+ *
+ * - Parameters:
+ *   - text: 文本内容
+ *   - interrupt: 是否打断前面的话
+ */
+- (void)commandAskWithText:(NSString *)text interrupt:(BOOL)interrupt;
+
+/**
+ * 打断数字人播报
+ */
+- (void)toBreakDigital;
+
+/**
+ * 麦克风收音
+ *
+ * - Parameter isEnabled: YES表示收音，NO表示静音
+ */
+- (void)setMute:(BOOL)isEnabled;
+
+/**
+ * 数字人静音
+ *
+ * - Parameter enable: YES表示静音，NO表示收音
+ */
+- (void)toSpeakerMute:(BOOL)enable;
+
+```
+SDK代理
+```
+@protocol DigitalViewDelegate <NSObject>
+
+/**
+ * 加载数字人资源
+ *
+ * - Parameters:
+ *   - isSuccess: 是否成功
+ *   - progress: 加载进度
+ */
+- (void)onVideoShow:(BOOL)isSuccess progress:(float)progress;
+
+/**
+ * 异常回调
+ *
+ * - Parameters:
+ *   - errorCode: 错误码
+ *   - errorMsg: 错误信息
+ */
+- (void)onError:(NSInteger)errorCode errorMsg:(NSString *)errorMsg;
+
+@optional
+
+/**
+ * ASR开始识别
+ */
+- (void)toWebrtcAsrStart;
+
+/**
+ * ASR识别
+ *
+ * - Parameters:
+ *   - asrText: 识别的文本
+ *   - isFinish: 是否结束
+ */
+- (void)toWebrtcAsrText:(NSString *)asrText isFinish:(BOOL)isFinish;
+
+/**
+ * 开始说话
+ *
+ * - Parameter dict: 开始说话的字典信息
+ */
+- (void)toSpeakStart:(NSDictionary *)dict;
+
+/**
+ * 结束说话
+ *
+ * - Parameter dict: 结束说话的字典信息
+ */
+- (void)toSpeakStop:(NSDictionary *)dict;
+
+/**
+ * 音频版开始说话
+ *
+ * - Parameter dict: 开始说话的字典信息
+ */
+- (void)toTTSSpeakStart:(NSDictionary *)dict;
+
+/**
+ * 音频版结束说话
+ *
+ * - Parameter dict: 结束说话的字典信息
+ */
+- (void)toTTSSpeakStop:(NSDictionary *)dict;
+
+/**
+ * 中控结束通话，发送bye事件
+ */
+- (void)onByeBye;
+
+/**
+ * 远程视频通讯完成
+ */
+- (void)onRTCReomteSuccess;
+
+/**
+ * 是否成功加载音频
+ *
+ * - Parameter isSuccess: 是否成功
+ */
+- (void)onAudioShow:(BOOL)isSuccess;
+
+/**
+ * webrtc连接状态回调
+ *
+ * - Parameter state: RTCIceConnectionState
+ */
+- (void)didIceConnectionChange:(RTCIceConnectionState)state;
+
+/**
+ * 中控获取到渲染端信息后通知客户端
+ *
+ * - Parameters:
+ *   - ID: id
+ *   - name: name
+ */
+- (void)onRender:(NSString *)ID name:(NSString *)name;
+
+/**
+ * 获取本地视频的视频流
+ *
+ * - Parameters:
+ *   - capturer: capturer
+ *   - frame: 视频帧
+ */
+- (void)capturer:(RTCVideoCapturer *)capturer didCaptureVideoFrame:(RTCVideoFrame *)frame;
+
+/**
+ * 获取远程音频流
+ *
+ * - Parameter sampleBuffer: Buffer
+ */
+- (void)onRemoteAudioBuffer:(CMSampleBufferRef)sampleBuffer;
+
+@end
+```

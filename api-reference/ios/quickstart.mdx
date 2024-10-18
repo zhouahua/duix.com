@@ -1,0 +1,18 @@
+---
+title: '快速开始'
+description: ''
+---
+
+调用前授权麦克风权限
+```
+- (void)toStart {
+
+    [[DigitalManager manager] initWithAppId:AppId appKey:AppKey conversationId:ConversationId block:^(BOOL isSuccee, NSString *errorMsg) {
+        if (isSuccee) {
+            [[DigitalManager manager] toStart];
+        } else {
+            NSLog(@"GJDigitalDemo==errorMsg==%@",errorMsg);
+        }
+    }];
+}
+```

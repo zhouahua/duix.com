@@ -1,0 +1,66 @@
+---
+title: '代码样例'
+description: ''
+---
+详细⻅Demo终代码
+```
+/// 设置自定义View
+[DigitalManager manager].remote_view = self.customView;
+
+#pragma mark -SDK初始化
+[[GJAccess manager] getCamerapermissions:^(bool isPermis) {
+    if (isPermis)  {
+        [[DigitalManager manager] initWithAppId:AppId appKey:AppKey conversationId:ConversationId block:^(BOOL isSuccee, NSString *errorMsg) {
+            if (isSuccee) {
+                [[DigitalManager manager] toStart];
+            } else {
+                NSLog(@"GJDigitalDemo==errorMsg==%@",errorMsg);
+            }
+        }];
+    }
+}];
+
+#pragma mark -结束会话
+- (void)toStop {
+
+    self.digitalShow = NO;
+    [[DigitalManager manager] toStop];
+}
+
+#pragma mark -SDK代理 DigitalViewDelegate
+#pragma mark -显示视频是否加载完成
+- (void)onVideoShow:(BOOL)isSuccess progress:(float)progress {
+    if (isSuccess) {
+        self.digitalShow = YES;
+        NSLog(@"GJDigitalDemo==加载完成");
+    } else {
+        NSLog(@"GJDigitalDemo==加载中-%lf",progress);
+    }
+}
+
+#pragma mark -异常场景错误信息
+- (void)onError:(NSInteger)error_code errorMsg:(NSString *)errorMsg {
+
+    if (error_code == -1 || error_code == -2) {
+        //MQTT连接异常
+    } else if (error_code == 50001) {
+        //错误或者空的appId
+    } else if (error_code == 50002) {
+        //资源检查失败，请联系管理员
+    } else if (error_code == 50003) {
+        //资源占用中，请检查后再试~
+    } else if (error_code == 50004) {
+        //human请求超时~
+    } else if (error_code == 50005) {
+        //从资源组中获取资源异常
+    } else if (error_code == 50006) {
+        //签名失败
+    } else if (error_code == 50007) {
+        //资源总并发不足，请检查后再试~
+    }  else if (error_code == 50009) {
+        //资源超时或未配置~
+    }
+    NSLog(@"GJDigitalDemo==errorMsg==%@",errorMsg);
+}
+
+```
