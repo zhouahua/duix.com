@@ -13,7 +13,7 @@
 ```
 #pragma mark -开始会话
 - (void)toStart {
-    
+
     [[DigitalManager manager] initWithAppId:AppId appKey:AppKey conversationId:ConversationId block:^(BOOL isSuccee, NSString *errorMsg) {
         if (isSuccee) {
             [[DigitalManager manager] toStart];
@@ -39,8 +39,8 @@
 1. 将 GJDigitalSDK.framework和webrtc⽂件拖拽至工程的资源目录下:
 工程-General-Frameworks,Libraries,and Embedded Content中的以下`framework`
 ```
-GJDigitalSDK.framework 
-WebRTC.framework 
+GJDigitalSDK.framework
+WebRTC.framework
 ```
 改为```Embed & Sign```
 
@@ -263,7 +263,7 @@ WebRTC.framework
 
 #pragma mark -结束会话
 - (void)toStop {
-    
+
     self.digitalShow = NO;
     [[DigitalManager manager] toStop];
 }
@@ -281,7 +281,7 @@ WebRTC.framework
 
 #pragma mark -异常场景错误信息
 - (void)onError:(NSInteger)error_code errorMsg:(NSString *)errorMsg {
-    
+
     if (error_code == -1 || error_code == -2) {
         //MQTT连接异常
     } else if (error_code == 50001) {
@@ -331,6 +331,3 @@ WebRTC.framework
 | 50006  | 签名失败                                                 |
 | 50007  | 资源总并发不足，请检查后再试~                                |
 | 50009  | 资源超时或未配置~                                          |
-
-
-

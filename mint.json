@@ -77,7 +77,7 @@
      {
       "group": "iOS SDK",
       "pages": [
-        "api-reference/ios/ios_sdk",
+        "api-reference/ios/download",
         "api-reference/endpoint/get",
         "api-reference/endpoint/create",
         "api-reference/endpoint/delete"
