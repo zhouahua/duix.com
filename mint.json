@@ -18,12 +18,12 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:feedback@duix.com"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Sign up",
+    "url": "https://duix.com/login"
   },
   "tabs": [
     {
@@ -74,7 +74,8 @@
         "api-reference/Getting Started",
         "api-reference/Create your first convsation",
         "api-reference/Get your API Keys",
-        "api-reference/Get Token"
+        "api-reference/Get Token",
+        "api-reference/DUIX API"
       ]
     },
      {
@@ -98,11 +99,22 @@
         "api-reference/android/interface",
         "api-reference/android/be_careful"
       ]
+    },
+    {
+      "group": "H5 SDK",
+      "pages": [
+        "api-reference/android/download",
+        "api-reference/android/dependent",
+        "api-reference/android/proguard",
+        "api-reference/android/quickstart",
+        "api-reference/android/interface",
+        "api-reference/android/be_careful"
+      ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "x": "https://x.com/duix",
+    "github": "https://github.com/duix",
+    "linkedin": "https://linkedin.com/company/duix"
   }
 }
