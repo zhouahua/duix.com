@@ -1,0 +1,61 @@
+---
+title: '快速启动'
+description: ''
+---
+
+在Activity中集成数字人模块代码, 如需使用麦克风，请确保启动前已经动态获取麦克风权限。
+
+```kotlin
+class DisplayActivity : BaseActivity() {
+
+    private var eglBaseContext = EglBase.create().eglBaseContext
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // ...
+
+        binding.render.init(eglBaseContext, null)
+        binding.render.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL)
+        binding.render.setMirror(false)
+        binding.render.setEnableHardwareScaler(false /* enabled */)
+
+        VirtualFactory.init("your appId", "your appSecret")
+
+        player = VirtualFactory.getPlayer(mContext, eglBaseContext)
+        player?.addCallback(object : Player.Callback {
+            override fun onShow() {
+                // can show digital human
+            }
+
+            override fun onError(msgType: Int, msgSubType: Int, msg: String?) {
+                // Log.e(TAG, "connect error")
+            }
+
+            override fun onAsrResult(text: String?, sentenceEnd: Boolean) {
+                
+            }
+
+            override fun onVideoTrack(
+                track: VideoTrack,
+            ) {
+                runOnUiThread {
+                    // Add source for digital human view
+                    track.addSink(binding.render)
+                }
+            }
+        })
+        player?.connect("your conversation id")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release resources 
+        player?.release()
+        binding.render.release()
+    }
+}
+```
+
+***现在！***  
+
+您可以使用麦克风和数字人进行对话了。

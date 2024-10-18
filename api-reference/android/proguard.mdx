@@ -1,0 +1,12 @@
+---
+title: 'Proguard混淆配置'
+description: ''
+---
+
+在项目的proguard-rules.pro文件中添加如下配置:
+
+```
+-keep class org.webrtc.**{ *; }
+-keep class org.eclipse.paho.client.** { *; }
+-keep class org.eclipse.paho.uri.** { *; }
+```

@@ -1,0 +1,21 @@
+---
+title: '添加依赖'
+description: ''
+---
+
+
+引入 aar 包: duix_cloud_sdk_release_${version}.aar  
+app 目录新建 libs 目录,放入 aar 包.
+在 build.gradle 中增加配置如下:
+
+```gradle
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation "org.webrtc:google-webrtc:1.0.32006"
+    implementation 'com.auth0:java-jwt:3.18.1'
+
+}
+```

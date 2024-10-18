@@ -86,7 +86,12 @@
     {
       "group": "Android SDK",
       "pages": [
-        "api-reference/android/android_sdk"
+        "api-reference/android/download",
+        "api-reference/android/dependent",
+        "api-reference/android/proguard",
+        "api-reference/android/quickstart",
+        "api-reference/android/interface",
+        "api-reference/android/be_careful"
       ]
     }
   ],
