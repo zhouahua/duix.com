@@ -5,69 +5,69 @@ description: ''
 
 ```
 /**
- * SDK初始化
+ * SDK initialization
  *
  * - Parameters:
- *   - appId: appId
- *   - appKey: appkey
- *   - conversationId: 会话Id
- *   - block: 回调
+ *   - appId: App ID
+ *   - appKey: App key
+ *   - conversationId: Session ID
+ *   - block: Callback
  */
 - (void)initWithAppId:(NSString *)appId appKey:(NSString *)appKey conversationId:(NSString *)conversationId block:(void (^)(BOOL isSuccee, NSString *errorMsg))block;
 
 /**
- * 开始通讯
+ * Start communication
  */
 - (void)toStart;
 
 /**
- * 结束通讯
+ * End communication
  */
 - (void)toStop;
 
 /**
- * 文本驱动数字人
+ * Text-driven digital human
  *
  * - Parameters:
- *   - text: 文本内容
- *   - interrupt: 是否打断前面的话
+ *   - text: Text content
+ *   - interrupt: Whether to interrupt the previous speech
  */
 - (void)commandEventWithText:(NSString *)text interrupt:(BOOL)interrupt;
 
 /**
- * 音频驱动数字人
+ * Audio-driven digital human
  *
  * - Parameters:
- *   - audioUrl: 音频地址
- *   - interrupt: 是否打断前面的话
+ *   - audioUrl: Audio URL
+ *   - interrupt: Whether to interrupt the previous speech
  */
 - (void)commandEventWithAudioUrl:(NSString *)audioUrl interrupt:(BOOL)interrupt;
 
 /**
- * 文本问答
+ * Text question and answer
  *
  * - Parameters:
- *   - text: 文本内容
- *   - interrupt: 是否打断前面的话
+ *   - text: Text content
+ *   - interrupt: Whether to interrupt the previous speech
  */
 - (void)commandAskWithText:(NSString *)text interrupt:(BOOL)interrupt;
 
 /**
- * 打断数字人播报
+ * Interrupt digital human broadcasting
  */
 - (void)toBreakDigital;
 
 /**
- * 麦克风收音
+ * Microphone sound pickup
  *
- * - Parameter isEnabled: YES表示收音，NO表示静音
+ * - Parameter isEnabled: YES indicates sound pickup, NO indicates mute
  */
 - (void)setMute:(BOOL)isEnabled;
 
 /**
- * 数字人静音
+ * Mute digital human
  *
- * - Parameter enable: YES表示静音，NO表示收音
+ * - Parameter enable: YES indicates mute, NO indicates sound pickup
  */
 - (void)toSpeakerMute:(BOOL)enable;
 
@@ -77,93 +77,93 @@ SDK代理
 @protocol DigitalViewDelegate <NSObject>
 
 /**
- * 加载数字人资源
+ * Load digital human resources
  *
  * - Parameters:
- *   - isSuccess: 是否成功
- *   - progress: 加载进度
+ *   - isSuccess: Whether the loading was successful
+ *   - progress: Loading progress
  */
 - (void)onVideoShow:(BOOL)isSuccess progress:(float)progress;
 
 /**
- * 异常回调
+ * Exception callback
  *
  * - Parameters:
- *   - errorCode: 错误码
- *   - errorMsg: 错误信息
+ *   - errorCode: Error code
+ *   - errorMsg: Error message
  */
 - (void)onError:(NSInteger)errorCode errorMsg:(NSString *)errorMsg;
 
 @optional
 
 /**
- * ASR开始识别
+ * ASR (Automatic Speech Recognition) start recognition
  */
 - (void)toWebrtcAsrStart;
 
 /**
- * ASR识别
+ * ASR recognition
  *
  * - Parameters:
- *   - asrText: 识别的文本
- *   - isFinish: 是否结束
+ *   - asrText: Recognized text
+ *   - isFinish: Whether it has finished
  */
 - (void)toWebrtcAsrText:(NSString *)asrText isFinish:(BOOL)isFinish;
 
 /**
- * 开始说话
+ * Start speaking
  *
- * - Parameter dict: 开始说话的字典信息
+ * - Parameter dict: Dictionary information for starting to speak
  */
 - (void)toSpeakStart:(NSDictionary *)dict;
 
 /**
- * 结束说话
+ * Stop speaking
  *
- * - Parameter dict: 结束说话的字典信息
+ * - Parameter dict: Dictionary information for stopping to speak
  */
 - (void)toSpeakStop:(NSDictionary *)dict;
 
 /**
- * 音频版开始说话
+ * Audio version start speaking
  *
- * - Parameter dict: 开始说话的字典信息
+ * - Parameter dict: Dictionary information for starting to speak
  */
 - (void)toTTSSpeakStart:(NSDictionary *)dict;
 
 /**
- * 音频版结束说话
+ * Audio version stop speaking
  *
- * - Parameter dict: 结束说话的字典信息
+ * - Parameter dict: Dictionary information for stopping to speak
  */
 - (void)toTTSSpeakStop:(NSDictionary *)dict;
 
 /**
- * 中控结束通话，发送bye事件
+ * Central control ends the call and sends a bye event
  */
 - (void)onByeBye;
 
 /**
- * 远程视频通讯完成
+ * Remote video communication completed
  */
 - (void)onRTCReomteSuccess;
 
 /**
- * 是否成功加载音频
+ * Whether audio loading was successful
  *
- * - Parameter isSuccess: 是否成功
+ * - Parameter isSuccess: Whether it was successful
  */
 - (void)onAudioShow:(BOOL)isSuccess;
 
 /**
- * webrtc连接状态回调
+ * WebRTC connection status callback
  *
  * - Parameter state: RTCIceConnectionState
  */
 - (void)didIceConnectionChange:(RTCIceConnectionState)state;
 
 /**
- * 中控获取到渲染端信息后通知客户端
+ * Central control notifies the client after obtaining rendering端信息
  *
  * - Parameters:
  *   - ID: id
@@ -172,20 +172,21 @@ SDK代理
 - (void)onRender:(NSString *)ID name:(NSString *)name;
 
 /**
- * 获取本地视频的视频流
+ * Get the local video's video stream
  *
  * - Parameters:
- *   - capturer: capturer
- *   - frame: 视频帧
+ *   - capturer: Capturer
+ *   - frame: Video frame
  */
 - (void)capturer:(RTCVideoCapturer *)capturer didCaptureVideoFrame:(RTCVideoFrame *)frame;
 
 /**
- * 获取远程音频流
+ * Get remote audio stream
  *
  * - Parameter sampleBuffer: Buffer
  */
 - (void)onRemoteAudioBuffer:(CMSampleBufferRef)sampleBuffer;
+
 
 @end
 ```
