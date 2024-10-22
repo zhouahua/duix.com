@@ -41,11 +41,11 @@ import java.util.Date;
 
 public class SigUtils {
     /**
-     * 创建签名
+     * Create Signature
      *
-     * @param appId  会话标识
-     * @param appKey 会话密钥
-     * @param sigExp 签名有效时间：单位秒
+     * @param appId  Session Identifier
+     * @param appKey Session Key
+     * @param sigExp Signature validity time: in seconds
      * @return
      */
     public static String createSig(String appId, String appKey, int sigExp) {
@@ -53,13 +53,13 @@ public class SigUtils {
         nowTime.add(Calendar.SECOND, sigExp);
         Date expiresDate = nowTime.getTime();
         return JWT.create()
-                //发行时间
+                //Release date
                 .withIssuedAt(new Date())
-                //有效时间
+                //effective time
                 .withExpiresAt(expiresDate)
-                //载荷
+                //load
                 .withClaim("appId", appId)
-                //加密
+                //encryption
                 .sign(Algorithm.HMAC256(appKey));
     }
 }
