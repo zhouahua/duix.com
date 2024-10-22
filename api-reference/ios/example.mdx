@@ -26,14 +26,14 @@ description: ''
     [[DigitalManager manager] toStop]; // Stop the session
 }
 
-#pragma mark -SDK代理 DigitalViewDelegate
-#pragma mark -显示视频是否加载完成
+#pragma mark -SDK Delegate DigitalViewDelegate
+#pragma mark -Video Load Completion
 - (void)onVideoShow:(BOOL)isSuccess progress:(float)progress {
     if (isSuccess) {
         self.digitalShow = YES;
-        NSLog(@"GJDigitalDemo==加载完成");
+        NSLog(@"GJDigitalDemo==Load Complete");
     } else {
-        NSLog(@"GJDigitalDemo==加载中-%lf",progress);
+        NSLog(@"GJDigitalDemo==Loading - %lf", progress); // Log loading progress
     }
 }
 
