@@ -1,0 +1,485 @@
+# openapi对接
+## 前提条件
+### 构造签名获取token
+
+对接duix-openapi-v2平台时，需在自己平台中集成生成token的代码,生成token的方法可参考以下代码：
+
+[如何获取Token](https://duix.guiji.ai/duix-document/fast-begin/index.html)
+
+### 校验token
+
+**接口地址**:
+
+/duix-openapi-v2/sdk/checkSig
+
+**请求方式**: `GET`
+
+**请求数据类型**: `application/json`
+
+**响应数据类型**: `application/json`
+
+##### 接口描述:
+
+验证token有效性，并返回数字人实时交互ws连接地址
+
+##### 参数说明
+
+| 参数名称 | 类型   | 传参方式 | 参数说明    |
+| -------- | ------ | -------- | ----------- |
+| sig      | String | Query    | 与token相同 |
+
+##### 响应参数:
+
+| 参数名称  | 类型             | 描述                 |
+| --------- | ---------------- | -------------------- |
+| appId     | String           | appId                |
+| wsService | String           | 数字人实时交互ws地址 |
+
+
+## 管理接口
+
+管理类HTTP请求有一个共同的约定，需要在请求头中传token
+
+
+### 交互流程
+
+<img src="./assets/img.png" alt="image.png"/>
+
+### 获取APP实时并发数
+
+##### 接口地址:
+
+/duix-openapi-v2/v1/getconcurrentNumber
+
+##### 请求方式: `GET`
+
+**接口描述**:
+
+查询某APP下并发数
+
+##### 参数说明
+
+| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| -------- | ------ | -------- | ----------------- |
+| appId    | String | Query    | 从平台创建的APPID |
+
+**响应参数**:
+
+| 参数名称 | 类型 |
+| -------- | ----- |
+|code|String|
+|data|ConcurrentStatus|
+|cropId|String|
+|totalConcurrentNumber|integer(int32)|
+|userConcurrentNumber|integer(int32)|
+|message|String|
+|success|boolean|
+
+**响应示例**:
+
+```json
+{
+  "code": "",
+  "data": {
+    "cropId": "",
+    "totalConcurrentNumber": 0,
+    "userConcurrentNumber": 0
+  },
+  "message": "",
+  "success": true
+}
+```
+
+### 获取APP实时会话
+
+##### 接口地址:
+
+/duix-openapi-v2/v1/getconcurrentList
+
+##### 请求方式: `GET`
+
+##### 接口描述:
+
+查询某APP下的”通话中“的会话列表。
+
+##### 参数说明
+
+| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| -------- | ------ | -------- | ----------------- |
+| appId    | String | Query    | 从平台创建的APPID |
+
+### 关闭APP所有会话
+
+##### 接口地址:
+
+/duix-openapi-v2/v1/distroyCallSessionsByAppId
+
+##### 请求方式: `GET`
+
+##### 接口描述：
+
+关闭某APP下所有的会话
+
+##### 参数说明
+
+| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| -------- | ------ | -------- | ----------------- |
+| appId    | String | Query    | 从平台创建的APPID |
+
+##### 响应示例:
+
+```json
+{
+  "code": "",
+  "data": "",
+  "message": "",
+  "success": true
+}
+```
+
+### 关闭指定会话
+
+##### 接口地址:
+/duix-openapi-v2/v1/sessionStop
+
+##### 请求方式: `GET`
+
+##### 参数说明
+| 参数名称 | 类型 | 传参方式    | 参数说明 |
+| -------- | -------- | ----- | -------- |
+|uuid|String|Query|`start-complete`事件返回的 sessionId 字段|
+
+
+### 第三方话术对接（非流式）
+
+##### 其他会话集成: 其他会话平台可以通过以下的方式提供给数字人使用。DUIX平台可以通过你的数字人，使用POST方式请求一个你定义的远程URL，来获取问题的答案。
+
+<img src="./assets/_tmp_dingtalkgov_qt_clipbord_pic_5.png" alt="image.png"/>
+
+##### 会话平台集成样例: 可以参考这个会话平台集成的例子。这个开源的应用实现了一个对话平台集成，该样例应用实现闲聊会话功能。
+
+##### 请求规范: DUIX平台将问题请求（客户想你的数字人提出的）按照以下格式，通过POST方式发送至你远程URL。
+
+##### 参数说明
+| Field | Type | Description    | Required |
+| -------- | ------ | ----- | -------- |
+|sid|String|你的用户id，在创建用户时产生。可以在账号信息中查看。|Y
+|dh-code|String|数字人编号，在每个数字人创建时产生，可以在数字人概览查看。|Y
+|dh-question|String|你需要问数字的问题内容|Y
+|dh-conversation-id|String|会话id，标识该会话的唯一标识|Y
+|dh-context|String|关于该会话期间产生的上下文信息，该信息为已经字符串化的JSON格式数据。|N
+
+##### 请求示例:
+
+```json
+{
+  "sid": "100003",
+  "dh-code": "187265485019156480",
+  "dh-question": "who are you?",
+  "dh-conversation-id": "0513e935-041f-48e0-9330-652ef4194511",
+  "dh-context": "{}"
+}
+```
+
+**响应规范**: 当你收到问题请求的时候，你需要按照下面的格式返回。
+
+| 字段      | 类型    | 是否必须 | 备注              |
+|---------| ------- | -------- |-----------------|
+| code    | String  | Y        | 返回的状态码 |
+| msg     | String  | N        | 成功/错误的描述信息      |
+| data    | object  | N        | 返回的具体内容         |
+| success | Boolean | Y        | 是否成功            |
+
+**有效响应类型**:
+
+| Code | Status       | Response                         |
+| ---- | ------------ | -------------------------------- |
+| 200  | OK           | 按照下面规范的返回体             |
+| 400  | Bad Request  | Request body/headers are invalid |
+| 401  | Unauthorized | 鉴权信息无效                     |
+| 403  | Forbidden    | 鉴权失败                         |
+| 500  | Server Error | 服务异常                         |
+
+**返回体规范**:
+
+| Field          | Type   | Description                                                  | Required |
+| -------------- | ------ | ------------------------------------------------------------ | -------- |
+| conversationId | String | 会话id，标识该会话的唯一标识，与请求参数体的dh-conversation-id一致。 | Y        |
+| question       | String | 用户所问的问题。                                             | N        |
+| answer         | String | 用户问数字人的问题的答案，这是一个字符串化的 JSON 对象。     | Y        |
+| intent         | String | 问题匹配到平台的意图                                         | N        |
+| errorMsg       | String | 异常或者对错误的描述                                         | N        |
+| extra          | String | 额外信息，JSON字符串                                         | N        |
+
+```json
+{
+  "code": "200",
+  "msg": "SUCCESS",
+  "success": true,
+  "data": {
+    "conversationId": "0513e935-041f-48e0-9330-652ef4194511",
+    "question": "who are you?",
+    "answer": {
+      "answer": "Welcome to UneeQ, how can I help?",
+      "operations": {
+        "tipPhrases": {
+          "phrases": ["yes", "no"]
+        },
+        "canShowText": 1
+      }
+    },
+    "intent": "introduce",
+    "errorMsg": "",
+    "extra": "{}"
+  }
+}
+```
+
+**预期响应时间**: 与数字人类的互动，由于他们的实时性，对延迟很敏感。因此，在处理来自DUIX平台的请求时，响应时间是需要考虑的一个重要因素。这些服务的响应时间需要95%以上在20秒以内。如果响应时间超过20s，该请求将报出超时错误，但是数字人将继续响应。
+
+### 第三方话术对接（流式）
+
+##### 其他会话集成: 其他会话平台可以通过以下的方式提供给数字人使用。DUIX平台可以通过你的数字人，使用POST方式请求一个你定义的远程URL，来获取问题的答案。
+
+<img src="./assets/_tmp_dingtalkgov_qt_clipbord_pic_5.png" alt="image.png"/>
+
+##### 会话平台集成样例: 可以参考这个会话平台集成的例子。这个开源的应用实现了一个对话平台集成，该样例应用实现闲聊会话功能。
+
+##### 请求规范: DUIX平台将问题请求（客户想你的数字人提出的）按照以下格式，通过POST方式发送至你远程URL。
+
+##### 参数说明
+| Field | Type | Description    | Required |
+| -------- | ------ | ----- | -------- |
+|sid|String|你的用户id，在创建用户时产生。可以在账号信息中查看。|Y
+|dh-code|String|数字人编号，在每个数字人创建时产生，可以在数字人概览查看。|Y
+|dh-question|String|你需要问数字的问题内容|Y
+|dh-conversation-id|String|会话id，标识该会话的唯一标识|Y
+|dh-context|String|关于该会话期间产生的上下文信息，该信息为已经字符串化的JSON格式数据。|N
+
+##### 请求示例:
+
+```json
+{
+  "sid": "100003",
+  "dh-code": "187265485019156480",
+  "dh-question": "who are you?",
+  "dh-conversation-id": "0513e935-041f-48e0-9330-652ef4194511",
+  "dh-context": "{}"
+}
+```
+
+
+**返回体规范**:
+
+| Field  | Type   | Description | Required |
+| ------ | ------ | ----------- | -------- |
+| answer | String | 返回答案	 | Y        |
+| isEnd  | boolean | 是否结束	 | Y        |
+
+```json
+{
+    "answer": "Let the Cowherd and Weaver Girl meet on the Milky Way.",
+    "isEnd": false
+}
+```
+
+**预期响应时间**: 与数字人类的互动，由于他们的实时性，对延迟很敏感。因此，在处理来自DUIX平台的请求时，响应时间是需要考虑的一个重要因素。这些服务的响应时间需要95%以上在20秒以内。如果响应时间超过20s，该请求将报出超时错误，但是数字人将继续响应。
+
+
+### 获取会话详情
+
+##### 接口地址:
+
+/duix-openapi-v2/sdk/getConversationById?conversationId=[duix平台会话id]
+
+##### 请求方式: `GET`
+
+**接口描述**:
+
+根据duix平台创建的会话id，查询会话详情。
+
+##### 参数说明
+
+| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| -------- | ------ | -------- | ----------------- |
+| conversationId    | String | Query    | 从平台创建的conversationId |
+
+**响应参数**:
+
+| 参数名称 | 类型 | 说明  |
+| -------- | ----- |  ----- |
+|code|String| 返回code |
+|data|JSON| 返回数据|
+|detailDto| JSON | 会话资源详情(含模型、背景、tts) |
+|detailDto.backgroundDto| JSON | 会话资源详情(背景) |
+|detailDto.modelId| String | 模型id |
+|detailDto.modelName| String | 模型名称 |
+|detailDto.modelIdType| String | 模型类型(0：云端数字人，1：本地数字人) |
+|detailDto.localModelInfo| JSON | 本地数字人信息 |
+|detailDto.backgroundDto| JSON | 会话资源详情(背景) |
+|detailDto.backgroundDto.backgroundUrl| String | 背景地址 |
+|scriptDtoList| JSON | 前置话术详情 |
+|scriptDtoList.scriptType| String | 0唤醒词，1开场白，2等待语，3未知问题，4告别词，5打断词，6打断语句，7引导词） |
+|scriptDtoList.scriptContent| String | 前置话术文本 |
+|scriptDtoList.ttsContent| String| 前置话术音频 |
+|message| String | 文本提示 |
+|success| boolean | 成功标志  |
+
+**响应示例**:
+
+```json
+{
+	"success": true,
+	"code": "200",
+	"message": "SUCCESS",
+	"msg": "SUCCESS",
+	"data": {
+		"id": "108",
+		"conversationName": "Unnamed-18:04",
+		"language": "zh",
+		"corpId": "1003645",
+		"userId": "3959",
+		"conversationConfigDto": null,
+		"maxConversation": 2,
+		"dataModelIsUsed": 1,
+		"knowledgeIsUsed": 1,
+		"fileIsUsed": 0,
+		"thirdIsUsed": 0,
+		"isFreedom": 0,
+		"asrProvider": null,
+		"conversationInfoDto": {
+			"id": 109,
+			"name": "1",
+			"nickName": "",
+			"gender": 1,
+			"age": 0,
+			"height": 0,
+			"weight": 0,
+			"characters": "",
+			"backStory": ""
+		},
+		"detailDto": {
+			"id": 95,
+			"conversationId": "108",
+			"proportion": "16:9",
+			"terminalType": 0,
+			"modelId": "321486924406853",
+			"modelIdType": 0,
+			"imageId": null,
+			"sceneId": null,
+			"modelName": "Model name",
+			"sceneType": 0,
+			"background": 1,
+			"backgroundDto": {
+				"id": 1,
+				"backgroundCode": "1591003727513522176",
+				"backgroundName": "zuoyi.jpg",
+				"backgroundUrl": "/video-server/jpg/1592809647136509954.jpg",
+				"fileType": 0,
+				"proportion": "16:9",
+				"userId": null
+			},
+			"modelConfig": null,
+			"ttsId": "15",
+			"ttsName": "guina",
+			"ttsConfig": null,
+			"ttsUrl": "",
+			"ttsVolume": 0,
+			"ttsSpeaker": "zhifeng_emo",
+			"ttsSpeedRate": 0,
+			"ttsPitch": 0,
+			"ttsSource": 20,
+			"samplePictureUrl": "/model/2023/02/06/c5348a17fac75feb0152a0c599b7af87.png",
+			"videoWidth": 1920,
+			"videoHeight": 1920,
+			"humanProportion": "9:16",
+			"humanWidth": 540,
+			"humanHeight": 960,
+			"humanX": 690,
+			"humanY": 120,
+			"localModelInfo": null
+		},
+		"knowledgeDtoList": [],
+		"kbConversationDto": null,
+		"modelDtoList": [
+			{
+				"id": 487,
+				"conversationId": "108",
+				"largeModelType": 0,
+				"modelCode": 0,
+				"largeName": "chatbot_law",
+				"modelId": "1",
+				"prompt": "Task: Your name is Zhang San, a real celebrity with a mischievous tone, humor, and a love for joking. Chatting with fans and friends, generating content replies in an oral style. \Requirements for generation: 1. Use my own name, 2. Meet the persona, 3. Prohibit the generation of English content, all must be generated in Chinese. 4. Within 30 words.",
+				"botUrl": ""
+			}
+		],
+		"thirdDto": null,
+		"scriptDtoList": [
+			{
+				"id": 2728,
+				"conversationId": "108",
+				"scriptType": 0,
+				"scriptContent": "Els silvrants",
+				"ttsContent": null,
+				"emotion": "0"
+			},
+			{
+				"id": 2729,
+				"conversationId": "108",
+				"scriptType": 1,
+				"scriptContent": "Hello, welcome to Duix",
+				"ttsContent": "https://digital-public-dev.obs.cn-east-3.myhuaweicloud.com/tts-proxy/2024-02-20/1800-_-633043663081836544--FC34641E6EB0A22404C845E219904E81.wav",
+				"emotion": "0"
+			},
+			{
+				"id": 2730,
+				"conversationId": "108",
+				"scriptType": 2,
+				"scriptContent": "Wait a moment, I'll think about it",
+				"ttsContent": "https://digital-public-dev.obs.cn-east-3.myhuaweicloud.com/tts-proxy/2024-02-20/1630-_-633043667485855744--3F501A3CA51F4DFAFBACE254DD2E3E32.wav",
+				"emotion": "0"
+			},
+			{
+				"id": 2731,
+				"conversationId": "108",
+				"scriptType": 3,
+				"scriptContent": "Sorry, I don't quite understand what you mean",
+				"ttsContent": "https://digital-public-dev.obs.cn-east-3.myhuaweicloud.com/tts-proxy/2024-02-20/2300-_-633043669830471680--2C5A656A6FBEA2CE09037F21F3DF8434.wav",
+				"emotion": "0"
+			},
+			{
+				"id": 2732,
+				"conversationId": "108",
+				"scriptType": 4,
+				"scriptContent": "Sorry, I don't quite understand what you mean",
+				"ttsContent": "https://digital-public-dev.obs.cn-east-3.myhuaweicloud.com/tts-proxy/2024-02-20/560-_-633043672326082560--051995577E5C4B5818F952C04A7997E2.wav",
+				"emotion": "0"
+			},
+			{
+				"id": 2733,
+				"conversationId": "108",
+				"scriptType": 5,
+				"scriptContent": "Stop talking",
+				"ttsContent": null,
+				"emotion": "0"
+			},
+			{
+				"id": 2734,
+				"conversationId": "108",
+				"scriptType": 6,
+				"scriptContent": "Okay, you can speak first",
+				"ttsContent": "https://digital-public-dev.obs.cn-east-3.myhuaweicloud.com/tts-proxy/2024-02-20/1600-_-633043674196742144--FC70FD95B50E8CEC9D9151905AE13F7F.wav",
+				"emotion": "0"
+			},
+			{
+				"id": 2735,
+				"conversationId": "108",
+				"scriptType": 7,
+				"scriptContent": "What is a digital person",
+				"ttsContent": "https://digital-public-dev.obs.cn-east-3.myhuaweicloud.com/tts-proxy/2024-02-20/1080-_-633043676541358080--414A4CBCE8B52677F05DAECFD1437BD0.wav",
+				"emotion": "0"
+			}
+		]
+	}
+}
+```
