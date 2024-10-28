@@ -38,11 +38,11 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/api/Getting Started",
-        "api-reference/api/Create your first convsation",
-        "api-reference/api/Get your API Keys",
-        "api-reference/api/Get Token",
-        "api-reference/api/Open API"
+        "api-reference/api/gettingStarted",
+        "api-reference/api/createYourFirstConvsation",
+        "api-reference/api/getYourAPIKeys",
+        "api-reference/api/getToken",
+        "api-reference/api/openAPI"
       ]
     },
      {
