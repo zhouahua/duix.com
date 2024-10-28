@@ -7,12 +7,12 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#000000",
+    "light": "#F5F5F8",
+    "dark": "#000000",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#000000",
+      "to": "#F5F5F8"
     }
   },
   "topbarLinks": [
@@ -38,11 +38,11 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/Getting Started",
-        "api-reference/Create your first convsation",
-        "api-reference/Get your API Keys",
-        "api-reference/Get Token",
-        "api-reference/Open API"
+        "api-reference/api/Getting Started",
+        "api-reference/api/Create your first convsation",
+        "api-reference/api/Get your API Keys",
+        "api-reference/api/Get Token",
+        "api-reference/api/Open API"
       ]
     },
      {

@@ -22,9 +22,9 @@ description: ''
 
 ```javascript
 {
-  code: '', // 错误码  
-  message: '', // 错误信息
-  data: {} // 错误内容
+  code: '', // error code 
+  message: '', // error message 
+  data: {} // error data
 }
 
 ```
@@ -50,8 +50,8 @@ number类型的进度，0-100
 ```javascript
 
 {
-  audio: '', // 音频地址
-  content: '', // 文本内容
+  audio: '', // audio src
+  content: '', // audio content
 }
 
 ```
@@ -61,8 +61,8 @@ number类型的进度，0-100
 ```javascript
 
 {
-  audio: '', // 音频地址
-  content: '', // 文本内容
+  audio: '',
+  content: '',
 }
 
 ```
@@ -72,8 +72,8 @@ number类型的进度，0-100
 ```javascript
 
 {
-  audio: '', // 音频地址
-  content: '', // 文本内容
+  audio: '',
+  content: '',
 }
 
 ```
@@ -83,7 +83,7 @@ number类型的进度，0-100
 ```javascript
 
 {
-  content: '', // 文本内容
+  content: '',
 }
 
 ```
@@ -92,22 +92,22 @@ number类型的进度，0-100
 
 ```javascript
 {
-    "video": { // 视频相关信息
+    "video": { // Video related information
         "download": {
-            "frameWidth": 1920, // 分辨率-宽
-            "frameHeight": 1080,// 分辨率-高
-            "framesPerSecond": 24,// 分辨率-帧率
-            "packetsLost": 0, // 总丢包数
-            "packetsLostPerSecond": 0 // 总丢率（每秒丢包数）
+            "frameWidth": 1920, // width
+            "frameHeight": 1080,// high
+            "framesPerSecond": 24,// frame rate
+            "packetsLost": 0, // Total number of lost packets
+            "packetsLostPerSecond": 0 // Total loss rate
         }
     },
-    "connection": { // 连接信息
-        "bytesSent": 206482, // 发送总字节数
-        "bytesReceived": 79179770, // 接收总字节数
-        "currentRoundTripTime": 3, // 包往返时间（单位毫秒），这个时间越大画面越延迟
+    "connection": { // linkage information
+        "bytesSent": 206482, // Total number of bytes sent
+        "bytesReceived": 79179770, // Total bytes received
+        "currentRoundTripTime": 3, // Packet round trip time (milliseconds), the larger the time, the more delayed the screen
         "timestamp": 1688043940523,
-        "receivedBitsPerSecond": 2978472, // 接收码率（每秒接收到的bit数，1Mb = 1024^2 bit）
-        "sentBitsPerSecond": 7920 // 发送码率（每秒发送的bit数，1Mb = 1024^2 bit）
+        "receivedBitsPerSecond": 2978472, // Receive bit rate (number of bits received per second, 1Mb = 1024^2 bits)
+        "sentBitsPerSecond": 7920 // Send bit rate (number of bits sent per second, 1Mb = 1024^2 bits)
     }
 }
 ```

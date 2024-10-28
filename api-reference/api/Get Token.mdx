@@ -1,0 +1,72 @@
+---
+title: '获取Token'
+description: '访问令牌（Token）是调用DUIX交互服务的服务鉴权凭证。所有的HTTP调用接口都需要将Token放入Header头中。'
+---
+
+### 获取Token的方法
+下面介绍获取访问令牌的方法。
+### 前提条件
+已获取```appKey```和```appId```，可在创建的API Keys中获取。
+操作步骤
+1、通过appKey和appId生成签名。
+2、使用签名作为调用h5 sdk的init方法的入参。
+### 签名生成
+签名使用的是JWT机制，用户可以参照下述完成签名
+### 参数说明
+签名生成需要准备以下参数
+
+| 名称| 类型 | 描述 | 示例 |
+| --- | --- | --- | --- |
+| appId | string | 会话标识，会话创建成功后获取 | xxxxxxx  |
+| appKey | string | 会话密钥，会话创建成功后获取 | xxxxxxx |
+| sigExp | Integer | 签名有效时间，单位秒 |  1800 |
+
+### 演示代码
+签名的示例代码如下，Java版示例
+```
+引入pom依赖
+
+<dependency>
+    <groupId>com.auth0</groupId>
+    <artifactId>java-jwt</artifactId>
+    <version>3.8.3</version>
+</dependency>
+
+```
+```
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import java.util.Calendar;
+import java.util.Date;
+
+public class SigUtils {
+    /**
+     * Create Signature
+     *
+     * @param appId  Session Identifier
+     * @param appKey Session Key
+     * @param sigExp Signature validity time: in seconds
+     * @return
+     */
+    public static String createSig(String appId, String appKey, int sigExp) {
+        Calendar nowTime = Calendar.getInstance();
+        nowTime.add(Calendar.SECOND, sigExp);
+        Date expiresDate = nowTime.getTime();
+        return JWT.create()
+                //Release date
+                .withIssuedAt(new Date())
+                //effective time
+                .withExpiresAt(expiresDate)
+                //load
+                .withClaim("appId", appId)
+                //encryption
+                .sign(Algorithm.HMAC256(appKey));
+    }
+}
+
+```
+
+** 注意：此签名（Token）即H5 SDK的sign
+
+### 集成开发
+根据以上几个步骤获取的AppID，秘钥和Token，就可以通过SDK和API概览详细了解在各类平台如何将DUIX集成到您的服务当中。
