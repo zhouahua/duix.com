@@ -93,12 +93,12 @@
     {
       "group": "H5 SDK",
       "pages": [
-        "api-reference/android/download",
-        "api-reference/android/dependent",
-        "api-reference/android/proguard",
-        "api-reference/android/quickstart",
-        "api-reference/android/interface",
-        "api-reference/android/be_careful"
+        "api-reference/h5/quickstart",
+        "api-reference/h5/process",
+        "api-reference/h5/methods",
+        "api-reference/h5/events",
+        "api-reference/h5/questions",
+        "api-reference/h5/versions"
       ]
     }
   ],

@@ -1,0 +1,114 @@
+---
+title: '事件'
+description: ''
+---
+
+| 名称           | 描述                                                         |
+| :------------- | :----------------------------------------------------------- |
+| error       | 有未捕获错误时触发。 |
+| bye           | 会话结束时触发。                                |
+| intialSucccess          | 数字人初始化成功。可以在这个事件的回调中调用`start`方法 |
+| show         | 出数字人已显示。 |
+| progress         | 数字人加载进度。 |
+| speakSection         | 数字人说话当前的音频和文本片段（answer方法会采用流式获取结果，如果单独调用speak,该事件与speakStart一致） |
+| speakStart         | 驱动数字人说话，到数字人实际说话之间有一点延迟，此事件表示数字人实际开始说话了 |
+| speakEnd         | 数字人说话结束 |
+| asrStart | 单句语音识别开启 |
+| asrData | 单句语音实时识别结果 |
+| asrStop | 单句语音识别结束 |
+| report | 每秒报告RTC网络/画面质量等信息 |
+
+### error
+
+```javascript
+{
+  code: '', // 错误码  
+  message: '', // 错误信息
+  data: {} // 错误内容
+}
+
+```
+
+***error code***
+
+
+| 名称           | 描述   | data |
+| :------------- | :----------| :---------- |
+| 3001 | RIC连接失败| |
+| 4001 | 开始会话失败 | |
+| 4005 | 鉴权失败 | |
+| 4007 | 服务端会话异常结束 | code: 100305 模型文件未找到|
+| 4008 | 获取麦克风流失败 | |
+| 4009 | 浏览器基于播放策略无法自动播放 | 请先考虑静音播放或用户操作调用start方法|
+
+### progress 
+
+number类型的进度，0-100
+
+### speakSection 
+
+```javascript
+
+{
+  audio: '', // 音频地址
+  content: '', // 文本内容
+}
+
+```
+
+### speakStart 
+
+```javascript
+
+{
+  audio: '', // 音频地址
+  content: '', // 文本内容
+}
+
+```
+
+### speakEnd 
+
+```javascript
+
+{
+  audio: '', // 音频地址
+  content: '', // 文本内容
+}
+
+```
+
+### asrData
+每段文本的识别，会以一个asrStart开始，一个asrStop结束，中间有一个或多个asrData（递增式的推送），可以在asrData事件中，获取语音识别结果，用于展示。
+```javascript
+
+{
+  content: '', // 文本内容
+}
+
+```
+
+### report 
+
+```javascript
+{
+    "video": { // 视频相关信息
+        "download": {
+            "frameWidth": 1920, // 分辨率-宽
+            "frameHeight": 1080,// 分辨率-高
+            "framesPerSecond": 24,// 分辨率-帧率
+            "packetsLost": 0, // 总丢包数
+            "packetsLostPerSecond": 0 // 总丢率（每秒丢包数）
+        }
+    },
+    "connection": { // 连接信息
+        "bytesSent": 206482, // 发送总字节数
+        "bytesReceived": 79179770, // 接收总字节数
+        "currentRoundTripTime": 3, // 包往返时间（单位毫秒），这个时间越大画面越延迟
+        "timestamp": 1688043940523,
+        "receivedBitsPerSecond": 2978472, // 接收码率（每秒接收到的bit数，1Mb = 1024^2 bit）
+        "sentBitsPerSecond": 7920 // 发送码率（每秒发送的bit数，1Mb = 1024^2 bit）
+    }
+}
+```
+**注意：** 未在上述详细列出的事件参数均为空
