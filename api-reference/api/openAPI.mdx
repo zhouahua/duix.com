@@ -1,6 +1,6 @@
 ---
 title: 'Open API'
-description: ''
+description: '管理接口'
 ---
 
 # openapi对接
@@ -10,36 +10,6 @@ description: ''
 对接duix-openapi-v2平台时，需在自己平台中集成生成token的代码,生成token的方法可参考以下代码：
 
 [如何获取Token](https://ahuahua.mintlify.app/api-reference/Get%20Token)
-
-### 校验token
-
-**接口地址**:
-
-/duix-openapi-v2/sdk/checkSig
-
-**请求方式**: `GET`
-
-**请求数据类型**: `application/json`
-
-**响应数据类型**: `application/json`
-
-##### 接口描述:
-
-验证token有效性，并返回数字人实时交互ws连接地址
-
-##### 参数说明
-
-| 参数名称 | 类型   | 传参方式 | 参数说明    |
-| -------- | ------ | -------- | ----------- |
-| sig      | String | Query    | 与token相同 |
-
-##### 响应参数:
-
-| 参数名称  | 类型             | 描述                 |
-| --------- | ---------------- | -------------------- |
-| appId     | String           | appId                |
-| wsService | String           | 数字人实时交互ws地址 |
-
 
 ## 管理接口
 
@@ -54,7 +24,7 @@ description: ''
 
 ##### 接口地址:
 
-/duix-openapi-v2/v1/getconcurrentNumber
+/duix-openapi-v2/sdk/v2/getconcurrentNumber
 
 ##### 请求方式: `GET`
 
@@ -99,7 +69,7 @@ description: ''
 
 ##### 接口地址:
 
-/duix-openapi-v2/v1/getconcurrentList
+/duix-openapi-v2/sdk/v2/getconcurrentList
 
 ##### 请求方式: `GET`
 
@@ -117,7 +87,7 @@ description: ''
 
 ##### 接口地址:
 
-/duix-openapi-v2/v1/distroyCallSessionsByAppId
+/duix-openapi-v2/sdk/v2/distroyCallSessionsByAppId
 
 ##### 请求方式: `GET`
 
@@ -145,7 +115,7 @@ description: ''
 ### 关闭指定会话
 
 ##### 接口地址:
-/duix-openapi-v2/v1/sessionStop
+/duix-openapi-v2/sdk/v2/sessionStop
 
 ##### 请求方式: `GET`
 
