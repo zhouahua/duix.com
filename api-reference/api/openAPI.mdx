@@ -1,46 +1,46 @@
 ---
 title: 'Open API'
-description: '管理接口'
+description: 'Management Interfaces'
 ---
 
-# openapi对接
-## 前提条件
-### 构造签名获取token
+# OpenAPI Integration
+## Prerequisites
+### Construct Signature to Get Token
 
-对接duix-openapi-v2平台时，需在自己平台中集成生成token的代码,生成token的方法可参考以下代码：
+When integrating with the duix-openapi-v2 platform, you need to integrate code to generate tokens in your own platform. The method for generating tokens can be referenced in the following code:
 
-[如何获取Token](https://ahuahua.mintlify.app/api-reference/Get%20Token)
+[How to Get Token](https://ahuahua.mintlify.app/api-reference/Get%20Token)
 
-## 管理接口
+## Management Interfaces
 
-管理类HTTP请求有一个共同的约定，需要在请求头中传token
+Management-type HTTP requests have a common convention that requires passing a token in the request header.
 
 
-### 交互流程
+### Interaction Process
 
 <img src="./assets/img.png" alt="image.png"/>
 
-### 获取APP实时并发数
+### Get APP Real-time Concurrent Number
 
-##### 接口地址:
+##### Interface Address:
 
 /duix-openapi-v2/sdk/v2/getconcurrentNumber
 
-##### 请求方式: `GET`
+##### Request Method: `GET`
 
-**接口描述**:
+**Interface Description**:
 
-查询某APP下并发数
+Query the concurrent number under a specific APP
 
-##### 参数说明
+##### Parameter Description
 
-| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| Parameter Name | Type   | Pass Method | Parameter Description |
 | -------- | ------ | -------- | ----------------- |
-| appId    | String | Query    | 从平台创建的APPID |
+| appId    | String | Query    | APPID created from the platform |
 
-**响应参数**:
+**Response Parameters**:
 
-| 参数名称 | 类型 |
+| Parameter Name | Type |
 | -------- | ----- |
 |code|String|
 |data|ConcurrentStatus|
@@ -50,7 +50,7 @@ description: '管理接口'
 |message|String|
 |success|boolean|
 
-**响应示例**:
+**Response Example**:
 
 ```json
 {
@@ -65,43 +65,43 @@ description: '管理接口'
 }
 ```
 
-### 获取APP实时会话
+### Get APP Real-time Sessions
 
-##### 接口地址:
+##### Interface Address:
 
 /duix-openapi-v2/sdk/v2/getconcurrentList
 
-##### 请求方式: `GET`
+##### Request Method: `GET`
 
-##### 接口描述:
+##### Interface Description:
 
-查询某APP下的”通话中“的会话列表。
+Query the list of "in call" sessions under a specific APP.
 
-##### 参数说明
+##### Parameter Description
 
-| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| Parameter Name | Type   | Pass Method | Parameter Description |
 | -------- | ------ | -------- | ----------------- |
-| appId    | String | Query    | 从平台创建的APPID |
+| appId    | String | Query    | APPID created from the platform |
 
-### 关闭APP所有会话
+### Close All Sessions of an APP
 
-##### 接口地址:
+##### Interface Address:
 
 /duix-openapi-v2/sdk/v2/distroyCallSessionsByAppId
 
-##### 请求方式: `GET`
+##### Request Method: `GET`
 
-##### 接口描述：
+##### Interface Description:
 
-关闭某APP下所有的会话
+Close all sessions under a specific APP
 
-##### 参数说明
+##### Parameter Description
 
-| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| Parameter Name | Type   | Pass Method | Parameter Description |
 | -------- | ------ | -------- | ----------------- |
-| appId    | String | Query    | 从平台创建的APPID |
+| appId    | String | Query    | APPID created from the platform |
 
-##### 响应示例:
+##### Response Example:
 
 ```json
 {
@@ -112,39 +112,39 @@ description: '管理接口'
 }
 ```
 
-### 关闭指定会话
+### Close Specified Session
 
-##### 接口地址:
+##### Interface Address:
 /duix-openapi-v2/sdk/v2/sessionStop
 
-##### 请求方式: `GET`
+##### Request Method: `GET`
 
-##### 参数说明
-| 参数名称 | 类型 | 传参方式    | 参数说明 |
+##### Parameter Description
+| Parameter Name | Type | Pass Method | Parameter Description |
 | -------- | -------- | ----- | -------- |
-|uuid|String|Query|`start-complete`事件返回的 sessionId 字段|
+|uuid|String|Query|sessionId field returned by the `start-complete` event|
 
 
-### 第三方话术对接（非流式）
+### Third-party Dialog Integration (Non-streaming)
 
-##### 其他会话集成: 其他会话平台可以通过以下的方式提供给数字人使用。DUIX平台可以通过你的数字人，使用POST方式请求一个你定义的远程URL，来获取问题的答案。
+##### Other Session Integration: Other session platforms can be provided for digital humans to use in the following way. The DUIX platform can, through your digital human, use the POST method to request a remote URL you define to get answers to questions.
 
 <img src="./assets/_tmp_dingtalkgov_qt_clipbord_pic_5.png" alt="image.png"/>
 
-##### 会话平台集成样例: 可以参考这个会话平台集成的例子。这个开源的应用实现了一个对话平台集成，该样例应用实现闲聊会话功能。
+##### Session Platform Integration Example: You can refer to this example of session platform integration. This open-source application implements a dialogue platform integration, which implements casual conversation functionality.
 
-##### 请求规范: DUIX平台将问题请求（客户想你的数字人提出的）按照以下格式，通过POST方式发送至你远程URL。
+##### Request Specification: The DUIX platform will send question requests (questions customers ask your digital human) in the following format via POST to your remote URL.
 
-##### 参数说明
-| Field | Type | Description    | Required |
+##### Parameter Description
+| Field | Type | Description | Required |
 | -------- | ------ | ----- | -------- |
-|sid|String|你的用户id，在创建用户时产生。可以在账号信息中查看。|Y
-|dh-code|String|数字人编号，在每个数字人创建时产生，可以在数字人概览查看。|Y
-|dh-question|String|你需要问数字的问题内容|Y
-|dh-conversation-id|String|会话id，标识该会话的唯一标识|Y
-|dh-context|String|关于该会话期间产生的上下文信息，该信息为已经字符串化的JSON格式数据。|N
+|sid|String|Your user ID, generated when creating a user. Can be viewed in account information.|Y
+|dh-code|String|Digital human code, generated when each digital human is created, can be viewed in the digital human overview.|Y
+|dh-question|String|The content of the question you need to ask the digital human|Y
+|dh-conversation-id|String|Conversation ID, a unique identifier for the conversation|Y
+|dh-context|String|Context information generated during the conversation, this information is a stringified JSON format data.|N
 
-##### 请求示例:
+##### Request Example:
 
 ```json
 {
@@ -156,35 +156,35 @@ description: '管理接口'
 }
 ```
 
-**响应规范**: 当你收到问题请求的时候，你需要按照下面的格式返回。
+**Response Specification**: When you receive a question request, you need to respond in the following format.
 
-| 字段      | 类型    | 是否必须 | 备注              |
+| Field    | Type    | Required | Remarks          |
 |---------| ------- | -------- |-----------------|
-| code    | String  | Y        | 返回的状态码 |
-| msg     | String  | N        | 成功/错误的描述信息      |
-| data    | object  | N        | 返回的具体内容         |
-| success | Boolean | Y        | 是否成功            |
+| code    | String  | Y        | Status code returned |
+| msg     | String  | N        | Success/error description message |
+| data    | object  | N        | Specific content returned |
+| success | Boolean | Y        | Whether successful |
 
-**有效响应类型**:
+**Valid Response Types**:
 
 | Code | Status       | Response                         |
 | ---- | ------------ | -------------------------------- |
-| 200  | OK           | 按照下面规范的返回体             |
+| 200  | OK           | Response body according to the specification below |
 | 400  | Bad Request  | Request body/headers are invalid |
-| 401  | Unauthorized | 鉴权信息无效                     |
-| 403  | Forbidden    | 鉴权失败                         |
-| 500  | Server Error | 服务异常                         |
+| 401  | Unauthorized | Authentication information is invalid |
+| 403  | Forbidden    | Authentication failed |
+| 500  | Server Error | Service exception |
 
-**返回体规范**:
+**Response Body Specification**:
 
 | Field          | Type   | Description                                                  | Required |
 | -------------- | ------ | ------------------------------------------------------------ | -------- |
-| conversationId | String | 会话id，标识该会话的唯一标识，与请求参数体的dh-conversation-id一致。 | Y        |
-| question       | String | 用户所问的问题。                                             | N        |
-| answer         | String | 用户问数字人的问题的答案，这是一个字符串化的 JSON 对象。     | Y        |
-| intent         | String | 问题匹配到平台的意图                                         | N        |
-| errorMsg       | String | 异常或者对错误的描述                                         | N        |
-| extra          | String | 额外信息，JSON字符串                                         | N        |
+| conversationId | String | Conversation ID, a unique identifier for the conversation, same as the dh-conversation-id in the request parameter body. | Y        |
+| question       | String | The question asked by the user.                               | N        |
+| answer         | String | The answer to the question the user asked the digital human, this is a stringified JSON object. | Y        |
+| intent         | String | The intent matched by the question on the platform            | N        |
+| errorMsg       | String | Description of the exception or error                         | N        |
+| extra          | String | Additional information, JSON string                           | N        |
 
 ```json
 {
@@ -210,28 +210,28 @@ description: '管理接口'
 }
 ```
 
-**预期响应时间**: 与数字人类的互动，由于他们的实时性，对延迟很敏感。因此，在处理来自DUIX平台的请求时，响应时间是需要考虑的一个重要因素。这些服务的响应时间需要95%以上在20秒以内。如果响应时间超过20s，该请求将报出超时错误，但是数字人将继续响应。
+**Expected Response Time**: The interaction with digital humans is sensitive to latency due to their real-time nature. Therefore, response time is an important factor to consider when processing requests from the DUIX platform. These services should respond within 95% of the time within 20 seconds. If the response time exceeds 20s, the request will report a timeout error, but the digital human will continue to respond.
 
-### 第三方话术对接（流式）
+### Third-party Dialog Integration (Streaming)
 
-##### 其他会话集成: 其他会话平台可以通过以下的方式提供给数字人使用。DUIX平台可以通过你的数字人，使用POST方式请求一个你定义的远程URL，来获取问题的答案。
+##### Other Session Integration: Other session platforms can be provided for digital humans to use in the following way. The DUIX platform can, through your digital human, use the POST method to request a remote URL you define to get answers to questions.
 
 <img src="./assets/_tmp_dingtalkgov_qt_clipbord_pic_5.png" alt="image.png"/>
 
-##### 会话平台集成样例: 可以参考这个会话平台集成的例子。这个开源的应用实现了一个对话平台集成，该样例应用实现闲聊会话功能。
+##### Session Platform Integration Example: You can refer to this example of session platform integration. This open-source application implements a dialogue platform integration, which implements casual conversation functionality.
 
-##### 请求规范: DUIX平台将问题请求（客户想你的数字人提出的）按照以下格式，通过POST方式发送至你远程URL。
+##### Request Specification: The DUIX platform will send question requests (questions customers ask your digital human) in the following format via POST to your remote URL.
 
-##### 参数说明
-| Field | Type | Description    | Required |
+##### Parameter Description
+| Field | Type | Description | Required |
 | -------- | ------ | ----- | -------- |
-|sid|String|你的用户id，在创建用户时产生。可以在账号信息中查看。|Y
-|dh-code|String|数字人编号，在每个数字人创建时产生，可以在数字人概览查看。|Y
-|dh-question|String|你需要问数字的问题内容|Y
-|dh-conversation-id|String|会话id，标识该会话的唯一标识|Y
-|dh-context|String|关于该会话期间产生的上下文信息，该信息为已经字符串化的JSON格式数据。|N
+|sid|String|Your user ID, generated when creating a user. Can be viewed in account information.|Y
+|dh-code|String|Digital human code, generated when each digital human is created, can be viewed in the digital human overview.|Y
+|dh-question|String|The content of the question you need to ask the digital human|Y
+|dh-conversation-id|String|Conversation ID, a unique identifier for the conversation|Y
+|dh-context|String|Context information generated during the conversation, this information is a stringified JSON format data.|N
 
-##### 请求示例:
+##### Request Example:
 
 ```json
 {
@@ -244,12 +244,12 @@ description: '管理接口'
 ```
 
 
-**返回体规范**:
+**Response Body Specification**:
 
 | Field  | Type   | Description | Required |
 | ------ | ------ | ----------- | -------- |
-| answer | String | 返回答案	 | Y        |
-| isEnd  | boolean | 是否结束	 | Y        |
+| answer | String | Return answer | Y        |
+| isEnd  | boolean | Whether to end | Y        |
 
 ```json
 {
@@ -258,49 +258,49 @@ description: '管理接口'
 }
 ```
 
-**预期响应时间**: 与数字人类的互动，由于他们的实时性，对延迟很敏感。因此，在处理来自DUIX平台的请求时，响应时间是需要考虑的一个重要因素。这些服务的响应时间需要95%以上在20秒以内。如果响应时间超过20s，该请求将报出超时错误，但是数字人将继续响应。
+**Expected Response Time**: The interaction with digital humans is sensitive to latency due to their real-time nature. Therefore, response time is an important factor to consider when processing requests from the DUIX platform. These services should respond within 95% of the time within 20 seconds. If the response time exceeds 20s, the request will report a timeout error, but the digital human will continue to respond.
 
 
-### 获取会话详情
+### Get Conversation Details
 
-##### 接口地址:
+##### Interface Address:
 
-/duix-openapi-v2/sdk/getConversationById?conversationId=[duix平台会话id]
+/duix-openapi-v2/sdk/getConversationById?conversationId=[duix platform conversation id]
 
-##### 请求方式: `GET`
+##### Request Method: `GET`
 
-**接口描述**:
+**Interface Description**:
 
-根据duix平台创建的会话id，查询会话详情。
+Query conversation details based on the conversation id created by the duix platform
 
-##### 参数说明
+##### Parameter Description
 
-| 参数名称 | 类型   | 传参方式 | 参数说明          |
+| Parameter Name | Type   | Pass Method | Parameter Description |
 | -------- | ------ | -------- | ----------------- |
-| conversationId    | String | Query    | 从平台创建的conversationId |
+| conversationId    | String | Query    | conversationId created by the platform |
 
-**响应参数**:
+**Response Parameters**:
 
-| 参数名称 | 类型 | 说明  |
+| Parameter Name | Type | Description |
 | -------- | ----- |  ----- |
-|code|String| 返回code |
-|data|JSON| 返回数据|
-|detailDto| JSON | 会话资源详情(含模型、背景、tts) |
-|detailDto.backgroundDto| JSON | 会话资源详情(背景) |
-|detailDto.modelId| String | 模型id |
-|detailDto.modelName| String | 模型名称 |
-|detailDto.modelIdType| String | 模型类型(0：云端数字人，1：本地数字人) |
-|detailDto.localModelInfo| JSON | 本地数字人信息 |
-|detailDto.backgroundDto| JSON | 会话资源详情(背景) |
-|detailDto.backgroundDto.backgroundUrl| String | 背景地址 |
-|scriptDtoList| JSON | 前置话术详情 |
-|scriptDtoList.scriptType| String | 0唤醒词，1开场白，2等待语，3未知问题，4告别词，5打断词，6打断语句，7引导词） |
-|scriptDtoList.scriptContent| String | 前置话术文本 |
-|scriptDtoList.ttsContent| String| 前置话术音频 |
-|message| String | 文本提示 |
-|success| boolean | 成功标志  |
+|code|String| Return code |
+|data|JSON| Return data|
+|detailDto| JSON | Conversation resource details (including model, background, tts) |
+|detailDto.backgroundDto| JSON | Conversation resource details (background) |
+|detailDto.modelId| String | Model ID |
+|detailDto.modelName| String | Model Name |
+|detailDto.modelIdType| String | Model Type (0: Cloud Digital Human, 1: Local Digital Human) |
+|detailDto.localModelInfo| JSON | Local Digital Human Information |
+|detailDto.backgroundDto| JSON | Conversation resource details (background) |
+|detailDto.backgroundDto.backgroundUrl| String | Background Address |
+|scriptDtoList| JSON | Frontend Dialog Details |
+|scriptDtoList.scriptType| String | 0 Wake-up Word, 1 Opening Line, 2 Waiting Phrase, 3 Unknown Question, 4 Farewell Phrase, 5 Interruption Phrase, 6 Interruption Sentence, 7 Guiding Phrase) |
+|scriptDtoList.scriptContent| String | Frontend Dialog Text |
+|scriptDtoList.ttsContent| String| Frontend Dialog Audio |
+|message| String | Text Prompt |
+|success| boolean | Success Flag |
 
-**响应示例**:
+**Response Example**:
 
 ```json
 {

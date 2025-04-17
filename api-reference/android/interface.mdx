@@ -1,170 +1,170 @@
 ---
-title: '关键接口'
+title: 'Key Interfaces'
 description: ''
 ---
 
 
-### 1. 初始化
+### 1. Initialization
 
-使用平台账户中提供的appId和appSecret初始化模块并获取Play对象
+Initialize the module with the appId and appSecret provided in your platform account and get the Play object
 ```
 VirtualFactory.init("your appId", "your appSecret")
 player = VirtualFactory.getPlayer(mContext, eglBaseContext)
 ```
 
 
-### 2. 连接数字人
+### 2. Connect to Digital Human
 
-使用平台账号提供的conversationId连接数字人
+Connect to the digital human using the conversationId provided by your platform account
 
 ```
     player?.addCallback(callback)
     player?.connect("your conversation id")
 ```
 
-其中callback包含如下回调
+The callback contains the following callbacks
 
-#### ```onShow``` 数字人可以展示了
+#### ```onShow``` Digital human is ready to display
 ```
 void onShow();
 ```
 
-#### ```onError``` 连接数字人发生异常
+#### ```onError``` Exception occurred when connecting to digital human
 
 ```
 void onError(int msgType, int msgSubType, String msg);
 ```
 
-返回参数说明:
+Parameter description:
 
-| 参数名            | 类型     | 说明      |
+| Parameter Name   | Type     | Description      |
 |----------------|--------|---------|
-| msgType        | int    | 错误类型    |
-| msgSubType     | int    | 子错误类型   |
-| msg            | String | 异常消息    |
+| msgType        | int    | Error type    |
+| msgSubType     | int    | Sub-error type   |
+| msg            | String | Exception message    |
 
-其中msgType的取值:
+Values of msgType:
 
-| 取值     | 说明       |     | 
+| Value     | Description       |     | 
 |--------|----------|-----|
-| 1000   | 授权异常     |     |   
-| 1001   | 创建会话异常   |     |   
-| 1002   | 获取素材异常   |     | 
-| 1010   | IM创建连接失败 |     |
-| 1011   | 渲染服务返回异常 |     |
-| 1020   | RTC 状态异常 |     |
-| 1030   | 渲染服务主动关闭 |     | 
-| 1040   | IM连接丢失   |     | 
-| 1050   | RTC连接丢失  |     | 
+| 1000   | Authorization exception     |     |   
+| 1001   | Session creation exception   |     |   
+| 1002   | Resource retrieval exception   |     | 
+| 1010   | IM connection creation failed |     |
+| 1011   | Rendering service returned exception |     |
+| 1020   | RTC status exception |     |
+| 1030   | Rendering service actively closed |     | 
+| 1040   | IM connection lost   |     | 
+| 1050   | RTC connection lost  |     | 
 
 
-#### ```onVideoTrack``` RTC媒体通道创建成功
+#### ```onVideoTrack``` RTC media channel created successfully
 
-在该回调中展示数字人控件绑定到track中
+Bind the digital human widget to the track in this callback
 
 ```
 void onVideoTrack(VideoTrack track);
 ```
 
-| 参数名            | 类型              | 说明         |
+| Parameter Name   | Type              | Description         |
 |----------------|-----------------|------------|
-| track          | VideoTrack      | 视频媒体通道     |
+| track          | VideoTrack      | Video media channel     |
 
-#### ```onAudioSamples``` 本地音频采集数据回调
+#### ```onAudioSamples``` Local audio sampling data callback
 
-可在该回调中实现音频图像化等操作
+You can implement audio visualization and other operations in this callback
 
 ```
 default void onAudioSamples(int audioFormat, int channelCount, int sampleRat, byte[] data){}
 ```
 
-#### ```onTtsSpeakStart``` 数字人开始播放TTS合成音频
+#### ```onTtsSpeakStart``` Digital human starts playing TTS synthesized audio
 
 ```
 default void onTtsSpeakStart(){}
 ```
 
-#### ```onTtsSpeakText``` 数字人播放TTS的文本内容
+#### ```onTtsSpeakText``` Text content of TTS played by digital human
 
 ```
 default void onTtsSpeakText(String text){}
 ```
 
-#### ```onTtsSpeakStop``` TTS文本播放完成
+#### ```onTtsSpeakStop``` TTS text playback completed
 
 ```
 default void onTtsSpeakStop(){}
 ```
 
-#### ```onSpeakStart``` 数字人开始播报
+#### ```onSpeakStart``` Digital human starts speaking
 
 ```
 default void onSpeakStart(){}
 ```
 
-#### ```onSpeakText``` 数字人播报的文本内容
+#### ```onSpeakText``` Text content spoken by digital human
 
 ```
 default void onSpeakText(String text){}
 ```
 
-#### ```onSpeakStop``` 数字人播报完成
+#### ```onSpeakStop``` Digital human finished speaking
 
 ```
 default void onSpeakStop(){}
 ```
 
-#### ```onAsrResult``` ASR识别内容回调
+#### ```onAsrResult``` ASR recognition content callback
 
 ```
 default void onAsrResult(String text, boolean sentenceEnd){}
 ```
 
 
-### 3. 音频URL驱动数字人说话
+### 3. Drive Digital Human to Speak with Audio URL
 
-使用16k采样率16bit单通道的WAV音频地址驱动数字人说话
+Use a WAV audio URL with 16kHz sampling rate, 16bit, mono channel to drive the digital human to speak
 
 ```kotlin
 player?.speakWithWav(wavUrl, true)
 ```
 
-| 参数名                   | 类型      | 说明         |
+| Parameter Name          | Type      | Description         |
 |-----------------------|---------|------------|
-| wavUrl                | String  | WAV音频的网络地址 |
-| interrupt             | boolean | 是否打断当前说话状态 |
+| wavUrl                | String  | Network address of WAV audio |
+| interrupt             | boolean | Whether to interrupt the current speaking state |
 
 
-### 4. 文本驱动数字人说话
+### 4. Drive Digital Human to Speak with Text
 
-输入想要数字人想说的话，数字人会根据会话配置的音色说出对应的内容。
+Input the text that you want the digital human to say, and the digital human will say the corresponding content according to the voice configured in the session.
 
 ```kotlin
 player?.speakWithTxt(text, true)
 ```
 
-| 参数名                   | 类型      | 说明          |
+| Parameter Name          | Type      | Description          |
 |-----------------------|---------|-------------|
-| text                  | String  | 数字人的要说的文本内容 |
-| interrupt             | boolean | 是否打断当前说话状态  |
+| text                  | String  | Text content for the digital human to say |
+| interrupt             | boolean | Whether to interrupt the current speaking state  |
 
 
-### 5. 数字人问答
+### 5. Digital Human Q&A
 
-让数字人来解答您的疑问。
+Let the digital human answer your questions.
 
 ```kotlin
 player?.speakWithQuestion(text, true)
 ```
 
-| 参数名                   | 类型      | 说明         |
+| Parameter Name          | Type      | Description         |
 |-----------------------|---------|------------|
-| text                  | String  | 向数字人表达您的问题 |
-| interrupt             | boolean | 是否打断当前说话状态 |
+| text                  | String  | Express your question to the digital human |
+| interrupt             | boolean | Whether to interrupt the current speaking state |
 
-### 6. 打断数字人说话
+### 6. Interrupt Digital Human Speaking
 
-让数字人不要再说了
+Make the digital human stop talking
 
 ```kotlin
 player?.stopAudio()

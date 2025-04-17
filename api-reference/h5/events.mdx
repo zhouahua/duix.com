@@ -1,22 +1,22 @@
 ---
-title: '事件'
+title: 'Events'
 description: ''
 ---
 
-| 名称           | 描述                                                         |
+| Name           | Description                                                  |
 | :------------- | :----------------------------------------------------------- |
-| error       | 有未捕获错误时触发。 |
-| bye           | 会话结束时触发。                                |
-| intialSucccess          | 数字人初始化成功。可以在这个事件的回调中调用`start`方法 |
-| show         | 出数字人已显示。 |
-| progress         | 数字人加载进度。 |
-| speakSection         | 数字人说话当前的音频和文本片段（answer方法会采用流式获取结果，如果单独调用speak,该事件与speakStart一致） |
-| speakStart         | 驱动数字人说话，到数字人实际说话之间有一点延迟，此事件表示数字人实际开始说话了 |
-| speakEnd         | 数字人说话结束 |
-| asrStart | 单句语音识别开启 |
-| asrData | 单句语音实时识别结果 |
-| asrStop | 单句语音识别结束 |
-| report | 每秒报告RTC网络/画面质量等信息 |
+| error       | Triggered when there is an uncaught error. |
+| bye           | Triggered when the session ends.                                |
+| intialSucccess          | Digital human initialization successful. You can call the `start` method in the callback of this event |
+| show         | Digital human has been displayed. |
+| progress         | Digital human loading progress. |
+| speakSection         | Current audio and text segment of the digital human speaking (the answer method will get results in streaming mode, if calling speak separately, this event is consistent with speakStart) |
+| speakStart         | There is a slight delay between driving the digital human to speak and the actual speaking, this event indicates that the digital human has actually started speaking |
+| speakEnd         | Digital human has finished speaking |
+| asrStart | Single sentence speech recognition started |
+| asrData | Single sentence real-time speech recognition results |
+| asrStop | Single sentence speech recognition ended |
+| report | Reports RTC network/picture quality and other information every second |
 
 ### error
 
@@ -32,18 +32,18 @@ description: ''
 ***error code***
 
 
-| 名称           | 描述   | data |
+| Name           | Description   | data |
 | :------------- | :----------| :---------- |
-| 3001 | RIC连接失败| |
-| 4001 | 开始会话失败 | |
-| 4005 | 鉴权失败 | |
-| 4007 | 服务端会话异常结束 | code: 100305 模型文件未找到|
-| 4008 | 获取麦克风流失败 | |
-| 4009 | 浏览器基于播放策略无法自动播放 | 请先考虑静音播放或用户操作调用start方法|
+| 3001 | RIC connection failed| |
+| 4001 | Failed to start session | |
+| 4005 | Authentication failed | |
+| 4007 | Server session abnormally ended | code: 100305 Model file not found|
+| 4008 | Failed to get microphone stream | |
+| 4009 | Browser cannot autoplay based on playback policy | Please consider muted playback or user operation to call the start method|
 
 ### progress 
 
-number类型的进度，0-100
+Progress of type number, 0-100
 
 ### speakSection 
 
@@ -79,7 +79,7 @@ number类型的进度，0-100
 ```
 
 ### asrData
-每段文本的识别，会以一个asrStart开始，一个asrStop结束，中间有一个或多个asrData（递增式的推送），可以在asrData事件中，获取语音识别结果，用于展示。
+The recognition of each text segment starts with an asrStart and ends with an asrStop, with one or more asrData (incremental push) in between. You can get speech recognition results in the asrData event for display.
 ```javascript
 
 {
@@ -95,13 +95,13 @@ number类型的进度，0-100
     "video": { // Video related information
         "download": {
             "frameWidth": 1920, // width
-            "frameHeight": 1080,// high
+            "frameHeight": 1080,// height
             "framesPerSecond": 24,// frame rate
             "packetsLost": 0, // Total number of lost packets
             "packetsLostPerSecond": 0 // Total loss rate
         }
     },
-    "connection": { // linkage information
+    "connection": { // connection information
         "bytesSent": 206482, // Total number of bytes sent
         "bytesReceived": 79179770, // Total bytes received
         "currentRoundTripTime": 3, // Packet round trip time (milliseconds), the larger the time, the more delayed the screen
@@ -111,4 +111,4 @@ number类型的进度，0-100
     }
 }
 ```
-**注意：** 未在上述详细列出的事件参数均为空
+**Note:** Event parameters not listed in detail above are empty

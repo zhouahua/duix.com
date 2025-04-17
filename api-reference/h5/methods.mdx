@@ -1,5 +1,5 @@
 ---
-title: '方法'
+title: 'Methods'
 description: ''
 ---
 
@@ -11,17 +11,17 @@ description: ''
 > })
 > ```
 
-***参数***
+***Parameters***
 
-| 名称| 类型 |必填 | 描述 | 
+| Name| Type |Required | Description | 
 | :-----------------| :-------------- | :----------------------------------------------------------- | :------    | 
-| containerLable   | string   |  是 |  数字人容器。数字人将渲染到这个Dom中。 | 
-| sign | string   |   是    |  鉴权字符串。[如何获取sign?](https://duix.guiji.ai/document/server-api/sign.html) |
+| containerLable   | string   |  Yes |  Digital human container. The digital human will be rendered in this DOM. | 
+| sign | string   |   Yes    |  Authentication string. [How to get sign?](https://duix.guiji.ai/document/server-api/sign.html) |
 
 #### start(option:object): Promise
 
-调用 `start` 方法将开始渲染数字人并进行交互。
-> **注意：** 此方法需要在`intialSucccess`事件触发后调用，`intialSucccess`事件表示所有资源准备完成。如下：
+Calling the `start` method will begin rendering the digital human and initiate interaction.
+> **Note:** This method needs to be called after the `intialSucccess` event is triggered. The `intialSucccess` event indicates that all resources are prepared. As follows:
 >
 > ```js
 > duix.on('intialSucccess', () => {
@@ -35,97 +35,97 @@ description: ''
 > })
 > ```
 
-***参数***
+***Parameters***
 
-| key         | 类型    | 必填 | 默认值 | 说明                                                         |
+| key         | Type    | Required | Default | Description                                                  |
 | ----------- | ------- | ---- | ------ | ------------------------------------------------------------ |
-| conversationId| number | 是 | | 平台会话id|
-| muted       | boolean | 否   | false  | 是否以静音的模式开启数字人视频。<br/>**重要提示:** 由于[自动播放政策](https://developer.mozilla.org/zh-CN/docs/Web/Media/Autoplay_guide)限制，如果您的网页还没有与用户有任何点击交互，请把这个参数置为`true`，**否则将导致数字人无法加载**。如果您有这样的需求，建议您先用静音模式启动，在产品中设计一个交互，比如一个“开始”的按钮来调用`duix.setVideoMuted(false)` |
-| openAsr     | boolean | 否   | false  | 是否直接开启实时识别，此项传true，相当于在调start后立即调用 `openAsr` 方法 |
-| wipeGreen   | boolean | 否   | false  | 是否对视频做扣绿幕操作。*在平台上创建会话时需上传一个纯绿色的背景图片* |
-| userId   | number | 否   | | 用户唯一标识 |
+| conversationId| number | Yes | | Platform conversation id|
+| muted       | boolean | No   | false  | Whether to start the digital human video in muted mode.<br/>**Important note:** Due to [autoplay policy](https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide) restrictions, if your webpage has not had any click interaction with the user yet, please set this parameter to `true`, **otherwise it will cause the digital human to fail to load**. If you have such a requirement, it is recommended that you start in mute mode first, and design an interaction in your product, such as a "Start" button to call `duix.setVideoMuted(false)` |
+| openAsr     | boolean | No   | false  | Whether to directly enable real-time recognition. If this is set to true, it is equivalent to calling the `openAsr` method immediately after calling start |
+| wipeGreen   | boolean | No   | false  | Whether to perform green screen removal on the video. *When creating a session on the platform, a pure green background image needs to be uploaded* |
+| userId   | number | No   | | User unique identifier |
 
 #### setVideoMuted(flag:boolean)
 
-设置数字人视频是否静音, true是静音，false为非静音。
+Set whether the digital human video is muted, true is muted, false is unmuted.
 
 #### break()
 
-打断数字人说话
+Interrupt the digital human speaking
 
 #### speak(option: Object): Promise
 
-驱动数字人说话，支持文本驱动和音频文件驱动。
+Drive the digital human to speak, supporting text-driven and audio file-driven modes.
 
 ```javascript
 duix.speak({content: '', audio: 'https://your.website.com/xxx/x.wav'})
 ```
 
-***参数***
+***Parameters***
 
-| 名称| 类型 |必填 | 描述 | 
+| Name| Type |Required | Description | 
 | :-----------------| :-------------- | :----------------------------------------------------------- | ------    | 
-| content   | string   |  是 |  数字人回答的文本 |
-| audio | string   |   否    |  数字人回答音频地址，可以通过`getAnswer`获取平台配置的答案|
-| interrupt | boolean   |   否    |  是否打断之前说的话 |
+| content   | string   |  Yes |  Text for the digital human to answer |
+| audio | string   |   No    |  Digital human answer audio address, which can be obtained through `getAnswer` to get the platform-configured answer|
+| interrupt | boolean   |   No    |  Whether to interrupt the previous speech |
 
 #### answer(option: Object): Promise
 
-数字人回答问题
+Digital human answers a question
 
 ```javascript
 duix.answer({question: 'xxx'})
 ```
 
-***参数***
+***Parameters***
 
-| 名称| 类型 |必填 | 描述 | 
+| Name| Type |Required | Description | 
 | :-----------------| :-------------- | :----------------------------------------------------------- | ------    | 
-| question   | string   |  是 |  问题文本 |
-| interrupt | boolean   |   否    |  是否打断之前说的话 |
+| question   | string   |  Yes |  Question text |
+| interrupt | boolean   |   No    |  Whether to interrupt the previous speech |
 
 #### getAnswer(option: Object): Promise
 
-平台获取问题的答案
+Get the answer to a question from the platform
 
 ```javascript
 duix.getAnswer({ question: 'what is your name?' })
 ```
 
-***参数***
+***Parameters***
 
-| 名称| 类型 |必填 | 描述 | 
+| Name| Type |Required | Description | 
 | :-----------------| :-------------- | :----------------------------------------------------------- | ------    | 
-| question   | string   |  是 |  问题文本 | 
-| userId   | number   |  否 |  业务侧用户唯一id，指定后获得答案是开启记忆功能 | 
+| question   | string   |  Yes |  Question text | 
+| userId   | number   |  No |  Business-side user unique ID, if specified, the obtained answer will have memory function enabled | 
 
 
-***返回data***
+***Return data***
 
-| 名称| 类型 | 描述 | 
+| Name| Type | Description | 
 | :-----------------| :-------------- | :----------------------------------------------------------- | 
-| answer   | string   | 数字人回答的文本 |  
-| audio | string   |   数字人回答音频地址 |
+| answer   | string   | Text answered by the digital human |  
+| audio | string   |   Digital human answer audio address |
 
 #### startRecord():Promise
 
-开始录音。
+Start recording.
 
 #### stopRecord():Promise
 
-结束录音，录音成功后将返加语音识别结果（文本），返回Promise。
+End recording. After successful recording, it will return the speech recognition result (text) and return a Promise.
 
 #### openAsr():Promise
 
-开启语音实时识别(注意此方法需在show触发时候调用)。开启语音实时识别后，可通过监听 `asrResult` 事件，接收识别（文本）结果。
+Enable real-time speech recognition (note that this method needs to be called when the show event is triggered). After enabling real-time speech recognition, you can monitor the `asrResult` event to receive recognition (text) results.
 
 #### closeAsr():Promise
 
-关闭语音实时识别。
+Close real-time speech recognition.
 
 #### stop()
 
-停止当前会话。建议在页卸载事件中调用此方法，以防止刷新或关闭网页时当前会话资源未及时释放。
+Stop the current session. It is recommended to call this method in the page unload event to prevent resources from not being released in time when refreshing or closing the webpage.
 
 ```js
 window.addEventListener('beforeunload', function(event) {
@@ -137,29 +137,29 @@ window.addEventListener('beforeunload', function(event) {
 
 #### getLocalStream()
 
-获取本地语音流，方便外部做音频可视化等功能
+Get the local audio stream, which is convenient for external audio visualization and other functions
 
 #### getRemoteStream()
 
-获取远端音视频流，方便外部做自定义
+Get the remote audio and video stream, which is convenient for external customization
 
 #### resume()
 
-恢复播放，目前仅针对部分移动端浏览器即便由用户操作触发自动播放，仍无效的情况。在抛出4009的error中由用户操作触发resume方法可解决。
+Resume playback, currently only for some mobile browsers where even if autoplay is triggered by user operation, it still doesn't work. Triggering the resume method through user operation in the 4009 error can solve this.
 
 #### on(eventname, callback)
 
-监听事件。
+Listen for events.
 
-##### 参数
+##### Parameters
 
 ###### eventname
 
-事件名称，详见下方表格。
+Event name, see the table below for details.
 
 ###### callback
 
-回调函数
+Callback function
 
-## 返回格式说明
-对于返回`Promise`的方法，参数格式为` { err, data } `,如果`err`不为空，则代表调用失败。
+## Return Format Description
+For methods that return `Promise`, the parameter format is ` { err, data } `. If `err` is not empty, it means the call failed.

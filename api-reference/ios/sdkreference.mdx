@@ -1,17 +1,17 @@
 ---
-title: 'SDK引⽤'
+title: 'SDK Reference'
 description: ''
 ---
 
-将 GJDigitalSDK.framework和WebRTC.framework⽂件拖拽至工程的资源目录下:
-工程-General-Frameworks,Libraries,and Embedded Content中的以下`framework`
+Drag the GJDigitalSDK.framework and WebRTC.framework files to the resource directory of the project:
+In project-General-Frameworks, Libraries, and Embedded Content, change the following `framework`
 ```
 GJDigitalSDK.framework
 WebRTC.framework
 ```
-改为```Embed & Sign```
+to ```Embed & Sign```
 
-2. Info.plist文件中添加录音权限和本地网络权限
+2. Add recording permission and local network permission in Info.plist file
 ```
 <key>NSLocalNetworkUsageDescription</key>
 <string>Obtain local network permissions</string>
