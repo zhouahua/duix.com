@@ -1,7 +1,5 @@
 # Overview
 
-Overview
-
 Overview of Duix's Replica offerings- Stock Replicas and Personal Replicas, all powered by the AI model. Get tips on how to create the perfect replica, and how to get a high quality output.
 
 A Replica is a realistic video model of a human created using the AI Model. The AI model is a fully-synthetic 2D based model that generates realistic replica videos from just a script, complete with natural face (lip, cheek, nose, chin) movements and expressions synchronized with your script and generated voice. Developed by our team
