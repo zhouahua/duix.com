@@ -9,7 +9,7 @@
   "colors": {
     "primary": "#f230aa",
     "light": "#F5F5F8",
-    "dark": "#000000",
+    "dark": "#f230aa",
     "anchors": {
       "from": "#f230aa",
       "to": "#F5F5F8"
@@ -38,7 +38,7 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/api/Introduction2",
+        "api-reference/api/Introduction",
         "api-reference/api/gettingStarted",
         "api-reference/api/createYourFirstConvsation",
         "api-reference/api/getYourAPIKeys",
@@ -49,17 +49,17 @@
     {
       "group": "Replica",
       "pages": [
-        "api-reference/api/Overview",
-        "api-reference/api/ReplicaTraining"
+        "api-reference/replica/Overview",
+        "api-reference/replica/ReplicaTraining"
       ]
     },
     {
       "group": "Conversational Video Interface",
       "pages": [
-        "api-reference/api/Overview2",
-        "api-reference/api/CreatingConversation",
-        "api-reference/api/CreatingPersona",
-        "api-reference/api/StockPersonas"
+        "api-reference/conversational/Overview",
+        "api-reference/conversational/CreatingConversation",
+        "api-reference/conversational/CreatingPersona",
+        "api-reference/conversational/StockPersonas"
         
       ]
     },
