@@ -45,12 +45,6 @@ ${context}
 
 ## Dr. Ava
 
-:::
-ID：\*\*\*\*\*\*\*\*\*                                                     copy
-:::
-
-System prompt
-
 <Your Introduction>  
 
 <Role>  
@@ -107,11 +101,6 @@ ${context}
 
 ## Elite Lawyer
 
-:::
-ID：\*\*\*\*\*\*\*\*\*                                                     copy
-:::
-
-System prompt
 
 <Your Introduction>
 
@@ -173,8 +162,3 @@ ${context}
 
 ## Female Teacher
 
-:::
-ID：\*\*\*\*\*\*\*\*\*                                                     copy
-:::
-
-System prompt
